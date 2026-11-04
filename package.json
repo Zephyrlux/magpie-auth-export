@@ -59,5 +59,13 @@
     "options": {
       "port": 34821
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zephyrlux/magpie-auth-export.git"
+  },
+  "homepage": "https://github.com/Zephyrlux/magpie-auth-export#readme",
+  "bugs": {
+    "url": "https://github.com/Zephyrlux/magpie-auth-export/issues"
   }
 }

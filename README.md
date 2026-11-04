@@ -9,13 +9,13 @@
 先安装 Magpie，再执行：
 
 ```sh
-magpie plugin add "https://github.com/OWNER/magpie-auth-export"
+magpie plugin add "https://github.com/Zephyrlux/magpie-auth-export"
 ```
 
-上面的 OWNER 替换为实际仓库所有者。macOS 如果 magpie 没有加入 PATH，可用完整程序路径：
+macOS 如果 magpie 没有加入 PATH，可用完整程序路径：
 
 ```sh
-/Applications/magpie.app/Contents/MacOS/magpie plugin add "https://github.com/OWNER/magpie-auth-export"
+/Applications/magpie.app/Contents/MacOS/magpie plugin add "https://github.com/Zephyrlux/magpie-auth-export"
 ```
 
 Magpie 会下载并管理插件。安装成功后重新打开 Magpie，左侧出现“导出认证”。
@@ -33,7 +33,7 @@ magpie plugin update
 也可以先 git clone，再添加本地文件夹（此方式后续自行 git pull）：
 
 ```sh
-git clone https://github.com/OWNER/magpie-auth-export.git
+git clone https://github.com/Zephyrlux/magpie-auth-export.git
 magpie plugin add ./magpie-auth-export
 ```
 
