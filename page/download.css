@@ -1,0 +1,98 @@
+/* Magpie's native settings palette, type and control spacing. */
+:root {
+  color-scheme: light;
+  --export-bg: #f4f4f6; --export-card: #ffffff; --export-card-2: #f9f9fb;
+  --export-pill: #f1f1f4; --export-pill-hover: #e9e9ee;
+  --export-line: #e3e3e8; --export-line-2: #ececf0;
+  --export-fg: #1c1c21; --export-fg-2: #4b4b53; --export-muted: #85858d;
+  --export-accent: #4f46e5; --export-accent-soft: #eeedfd; --export-accent-fg: #ffffff;
+  --export-green: #189a58; --export-green-soft: #e4f6ec; --export-red: #d64545; --export-red-soft: #fbe9e9;
+  font: 13px/1.4 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --export-bg: #1a1a1e; --export-card: #232327; --export-card-2: #1f1f23;
+    --export-pill: #2d2d33; --export-pill-hover: #36363d; --export-line: #333339; --export-line-2: #2c2c32;
+    --export-fg: #ededf1; --export-fg-2: #b9b9c1; --export-muted: #8b8b94;
+    --export-accent: #a5b4fc; --export-accent-soft: #2b2c47; --export-accent-fg: #14142a;
+    --export-green: #6fd99b; --export-green-soft: #1e3a2b; --export-red: #f28b82; --export-red-soft: #45272a;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --export-bg: #1a1a1e; --export-card: #232327; --export-card-2: #1f1f23;
+  --export-pill: #2d2d33; --export-pill-hover: #36363d; --export-line: #333339; --export-line-2: #2c2c32;
+  --export-fg: #ededf1; --export-fg-2: #b9b9c1; --export-muted: #8b8b94;
+  --export-accent: #a5b4fc; --export-accent-soft: #2b2c47; --export-accent-fg: #14142a;
+  --export-green: #6fd99b; --export-green-soft: #1e3a2b; --export-red: #f28b82; --export-red-soft: #45272a;
+}
+* { box-sizing: border-box; }
+html { min-height: 100%; background: var(--magpie-bg, var(--export-bg)); color: var(--magpie-fg, var(--export-fg)); }
+body { margin: 0; padding: 20px 16px 28px; }
+.download { width: 100%; max-width: 640px; margin: 0 auto; }
+.download .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.download .download-intro { margin: 0 2px 16px; color: var(--magpie-muted, var(--export-muted)); font-size: 12.5px; line-height: 1.6; }
+.download .download-group { overflow: hidden; border: 1px solid var(--magpie-line, var(--export-line)); border-radius: 12px; background: var(--magpie-card, var(--export-card)); }
+.download .download-row { display: flex; min-height: 52px; align-items: center; justify-content: space-between; gap: 24px; padding: 11px 14px; }
+.download .download-row + .download-row { border-top: 1px solid var(--magpie-line-2, var(--export-line-2)); }
+.download .download-row > label { font-size: 13px; line-height: 1.4; color: var(--magpie-fg, var(--export-fg)); }
+.download .download-select { position: relative; flex: 0 1 210px; min-width: 0; }
+.download .download-select select { display: block; width: 100%; height: 26px; margin: 0; padding: 0 28px 0 9px; border: 1px solid var(--magpie-line, var(--export-line)); border-radius: 6px; background: var(--magpie-pill, var(--export-pill)); color: var(--magpie-fg, var(--export-fg)); font: inherit; font-size: 12.5px; line-height: normal; text-overflow: ellipsis; appearance: none; -webkit-appearance: none; cursor: pointer; transition: background .12s, border-color .12s, box-shadow .12s; }
+.download .download-select select:hover:not(:disabled) { background: var(--magpie-pill-hover, var(--export-pill-hover)); }
+.download .select-chevron { position: absolute; right: 9px; top: 7px; pointer-events: none; color: var(--magpie-muted, var(--export-muted)); }
+.download .download-select select:disabled { opacity: .55; cursor: default; }
+.download .download-select select:focus-visible { outline: none; border-color: var(--magpie-accent, var(--export-accent)); box-shadow: 0 0 0 3px var(--magpie-accent-soft, var(--export-accent-soft)); }
+.download .account-section { border-top: 1px solid var(--magpie-line-2, var(--export-line-2)); }
+.download .account-heading { display: flex; min-height: 43px; align-items: center; justify-content: space-between; gap: 16px; padding: 9px 14px; }
+.download .account-heading-label { display: inline-flex; align-items: baseline; gap: 9px; min-width: 0; font-size: 13px; }
+.download .account-selection-count { color: var(--magpie-muted, var(--export-muted)); font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.download .account-heading-actions { display: inline-flex; align-items: center; gap: 12px; flex: 0 0 auto; }
+.download .accounts-refresh { height: 23px; margin: 0; padding: 0 5px; border: 0; border-radius: 5px; background: transparent; color: var(--magpie-muted, var(--export-muted)); font: inherit; font-size: 11.5px; cursor: pointer; }
+.download .accounts-refresh:hover:enabled { color: var(--magpie-fg, var(--export-fg)); background: var(--magpie-pill, var(--export-pill)); }
+.download .accounts-refresh:disabled { opacity: .45; cursor: default; }
+.download .account-select-all { display: inline-flex; gap: 6px; align-items: center; color: var(--magpie-fg-2, var(--export-fg-2)); font-size: 11.5px; cursor: pointer; }
+.download .account-section input[type="checkbox"] { width: 14px; height: 14px; margin: 0; flex: 0 0 auto; accent-color: var(--magpie-accent, var(--export-accent)); cursor: pointer; }
+.download .account-section input[type="checkbox"]:disabled { opacity: .5; cursor: default; }
+.download .account-section input[type="checkbox"]:focus-visible, .download .accounts-refresh:focus-visible { outline: 2px solid var(--magpie-accent, var(--export-accent)); outline-offset: 3px; }
+.download .account-select-all:has(input:disabled) { color: var(--magpie-muted, var(--export-muted)); cursor: default; }
+.download .account-list { max-height: 240px; overflow-x: hidden; overflow-y: auto; border-top: 1px solid var(--magpie-line-2, var(--export-line-2)); scrollbar-width: thin; scrollbar-color: var(--magpie-line, var(--export-line)) transparent; overscroll-behavior: contain; }
+.download .account-list::-webkit-scrollbar { width: 7px; }
+.download .account-list::-webkit-scrollbar-thumb { border: 2px solid transparent; border-radius: 7px; background: var(--magpie-line, var(--export-line)); background-clip: padding-box; }
+.download .account-row { display: flex; min-height: 49px; align-items: center; gap: 10px; padding: 9px 14px; cursor: pointer; transition: background .12s; }
+.download .account-row + .account-row { border-top: 1px solid var(--magpie-line-2, var(--export-line-2)); }
+.download .account-row:hover:has(input:not(:disabled)) { background: var(--magpie-card-2, var(--export-card-2)); }
+.download .account-row:has(input:checked) { background: color-mix(in srgb, var(--magpie-accent-soft, var(--export-accent-soft)) 42%, transparent); }
+.download .account-row:is(.disabled, .unsupported), .download .account-row:has(input:disabled) { cursor: default; }
+.download .account-row:has(input:disabled) .account-user { color: var(--magpie-muted, var(--export-muted)); }
+.download .account-details { display: flex; flex: 1 1 auto; min-width: 0; flex-direction: column; gap: 2px; }
+.download .account-user { color: var(--magpie-fg, var(--export-fg)); font-size: 12.5px; line-height: 1.4; overflow-wrap: anywhere; }
+.download .account-plan { color: var(--magpie-muted, var(--export-muted)); font-size: 11px; line-height: 1.4; overflow-wrap: anywhere; }
+.download :is(.account-hint, .account-note, .account-unavailable) { color: var(--magpie-muted, var(--export-muted)); font-size: 10.5px; line-height: 1.45; text-align: right; max-width: 120px; }
+.download .accounts-empty { min-height: 74px; display: flex; align-items: center; justify-content: center; margin: 0; padding: 20px 16px; color: var(--magpie-muted, var(--export-muted)); font-size: 12px; line-height: 1.5; text-align: center; overflow-wrap: anywhere; }
+.download .account-list[data-state="error"] .accounts-empty, .download .accounts-empty.error { color: var(--magpie-red, var(--export-red)); }
+.download .account-section[aria-busy="true"] .account-row { cursor: progress; }
+.download .download-footer { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin: 16px 2px 0; }
+.download .download-note { color: var(--magpie-muted, var(--export-muted)); font-size: 11.5px; line-height: 1.5; }
+.download #download-export { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; gap: 6px; height: 27px; margin: 0; padding: 0 10px; border: 1px solid transparent; border-radius: 6px; background: var(--magpie-accent, var(--export-accent)); color: var(--magpie-accent-fg, var(--export-accent-fg)); font: inherit; font-size: 12px; font-weight: 500; line-height: 1; white-space: nowrap; cursor: pointer; transition: filter .12s, box-shadow .12s, opacity .12s; }
+.download #download-export:hover:enabled { filter: brightness(1.08); }
+.download #download-export:active:enabled { filter: brightness(.96); }
+.download #download-export:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--magpie-bg, var(--export-bg)), 0 0 0 4px var(--magpie-accent, var(--export-accent)); }
+.download #download-export:disabled { opacity: .5; cursor: default; }
+.download .button-icon { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; }
+.download #download-export:is([aria-busy="true"], [data-busy="true"]) .button-icon > svg { visibility: hidden; }
+.download #download-export:is([aria-busy="true"], [data-busy="true"]) .button-icon::after { content: ""; position: absolute; inset: 1px; border: 1.5px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: export-spin .8s linear infinite; }
+.download .download-status { position: relative; margin: 18px 0 0; padding: 11px 13px; border: 1px solid var(--magpie-line, var(--export-line)); border-radius: 8px; background: var(--magpie-card-2, var(--export-card-2)); color: var(--magpie-fg-2, var(--export-fg-2)); font-size: 12px; line-height: 1.55; overflow-wrap: anywhere; user-select: text; }
+.download .download-status:empty { display: none; }
+.download .download-status[data-state="success"] { border-color: color-mix(in srgb, var(--magpie-green, var(--export-green)) 24%, var(--magpie-line, var(--export-line))); }
+.download .download-status[data-state="success"] .status-title { color: var(--magpie-green, var(--export-green)); }
+.download .download-status[data-state="success"] .status-title::before { content: "✓"; display: inline-block; margin-right: 6px; font-weight: 600; }
+.download .download-status:is([data-state="error"], .error) { color: var(--magpie-red, var(--export-red)); border-color: color-mix(in srgb, var(--magpie-red, var(--export-red)) 30%, var(--magpie-line, var(--export-line))); background: var(--magpie-red-soft, var(--export-red-soft)); }
+.download .download-status[data-state="busy"] { padding: 0 2px; border-color: transparent; background: transparent; color: var(--magpie-muted, var(--export-muted)); }
+.download .download-status .status-title { display: block; font-size: 12px; font-weight: 500; }
+.download .download-status .status-path { display: block; min-width: 0; margin-top: 5px; color: var(--magpie-muted, var(--export-muted)); font: 11px/1.65 var(--magpie-code, ui-monospace, "SF Mono", Menlo, Consolas, monospace); overflow-wrap: anywhere; word-break: normal; white-space: pre-line; }
+@keyframes export-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .download * { transition: none !important; } .download #download-export .button-icon::after { animation-duration: 1.6s; } }
+@media (max-width: 540px) { body { padding: 20px 16px 28px; } .download .download-row { padding: 11px 14px; gap: 16px; } .download .download-select { flex-basis: 200px; } }
+@media (max-width: 380px) { body { padding: 18px 14px 24px; } .download .download-row { gap: 12px; padding: 11px 12px; } .download .download-select { flex-basis: 174px; } .download .download-note { font-size: 11px; } .download .account-heading { padding-right: 12px; padding-left: 12px; gap: 10px; } .download .account-heading-label { gap: 6px; } .download .account-heading-actions { gap: 7px; } .download .account-row { padding-right: 12px; padding-left: 12px; } .download :is(.account-hint, .account-note, .account-unavailable) { max-width: 84px; } }

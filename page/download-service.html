@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="export-session" content="__SESSION_TOKEN__">
+  <title>导出认证</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="download.css">
+  <script src="download-service.js" defer></script>
+</head>
+<body>
+  <main class="download">
+    <h1 class="sr-only">导出认证</h1>
+    <p class="download-intro">下载所选提供商的认证文件。</p>
+    <div class="download-group">
+      <div class="download-row">
+        <label for="download-provider">提供商</label>
+        <div class="download-select">
+          <select id="download-provider" aria-label="提供商">
+            <option value="codex">Codex / ChatGPT</option>
+            <option value="claude">Claude</option>
+          </select>
+          <svg class="select-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m3.5 4.75 2.5 2.5 2.5-2.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="download-row">
+        <label for="download-format">认证格式</label>
+        <div class="download-select">
+          <select id="download-format" aria-label="认证格式">
+            <option value="cliproxyapi">CLIProxyAPI JSON</option>
+            <option value="codex">Codex auth.json</option>
+            <option value="raw">原始认证 JSON</option>
+          </select>
+          <svg class="select-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m3.5 4.75 2.5 2.5 2.5-2.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="account-section" aria-busy="true">
+        <div class="account-heading">
+          <div class="account-heading-label"><span>账号</span><span id="account-selection-count" class="account-selection-count">已选 0 个</span></div>
+          <div class="account-heading-actions">
+            <button id="accounts-refresh" class="accounts-refresh" type="button" disabled>刷新</button>
+            <label class="account-select-all"><input id="account-select-all" type="checkbox" aria-label="全选账号" disabled><span>全选</span></label>
+          </div>
+        </div>
+        <div id="download-accounts" class="account-list" role="group" aria-label="选择导出账号" aria-live="polite" data-state="loading"><p class="accounts-empty">正在读取账号…</p></div>
+      </div>
+    </div>
+    <div class="download-footer">
+      <span class="download-note">保存到下载文件夹</span>
+      <button id="download-export" type="button" aria-label="导出认证" title="下载认证文件" disabled><span class="button-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m-4-4 4 4 4-4M4 15v5h16v-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="button-label">下载认证文件</span></button>
+    </div>
+    <p id="download-status" class="download-status" role="status" aria-live="polite" hidden></p>
+  </main>
+</body>
+</html>

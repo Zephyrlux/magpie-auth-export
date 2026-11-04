@@ -1,0 +1,63 @@
+// Exercises the installed Magpie/Bun host with synthetic credentials only.
+import { spawn } from 'node:child_process';
+import { mkdtemp, mkdir, writeFile, readFile, readdir, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join, resolve, dirname } from 'node:path';
+import { createInterface } from 'node:readline';
+import assert from 'node:assert/strict';
+import net from 'node:net';
+const [bun, host] = process.argv.slice(2);
+if (!bun || !host) throw new Error('Usage: node tests/host-smoke.mjs <magpie-bun> <host.js>');
+const root = await mkdtemp(join(tmpdir(), 'magpie-export-host-'));
+const sourceDir = join(root, 'source'), outputDir = join(root, 'output');
+await mkdir(sourceDir);
+await writeFile(join(sourceDir, 'logins.json'), JSON.stringify([{ id: 'host-demo', agent: 'codex', user: 'demo@example.com', auth: { tokens: { access_token: 'synthetic-host-access', refresh_token: 'synthetic-host-refresh' } } }]));
+const probe = net.createServer();
+await new Promise(r => probe.listen(0, '127.0.0.1', r));
+const port = probe.address().port;
+await new Promise(r => probe.close(r));
+const child = spawn(bun, [host], { stdio: ['pipe', 'pipe', 'pipe'] });
+const exited = new Promise(r => child.once('exit', r));
+const lines = createInterface({ input: child.stdout });
+let timeout;
+try {
+  const response = new Promise((resolveResponse, reject) => {
+    timeout = setTimeout(() => reject(new Error('Magpie host initialization timed out.')), 15000);
+    child.on('error', reject);
+    lines.on('line', line => { const data = JSON.parse(line); if (data.id === 1) resolveResponse(data); });
+  });
+  const target = resolve('.');
+  child.stdin.write(JSON.stringify({ id: 1, method: 'init', params: { authPath: join(sourceDir, 'plugin-auth.json'), directory: sourceDir, plugins: [{ spec: target, target, options: { port, outputDir } }] } }) + '\n');
+  const initialized = await response;
+  clearTimeout(timeout);
+  assert.ok(!initialized.error, 'host should initialize');
+  assert.ok(initialized.result.plugins.length === 1 && !initialized.result.plugins[0].error, 'plugin should load');
+  const base = `http://127.0.0.1:${port}`;
+  const html = await (await fetch(base)).text();
+  const token = html.match(/name="export-session" content="([0-9a-f]{64})"/)[1];
+  const headers = { 'X-Export-Session': token, 'Content-Type': 'application/json' };
+  const metadata = await (await fetch(base + '/api/accounts', { headers })).json();
+  assert.equal(metadata.accounts.length, 1);
+  const result = await (await fetch(base + '/api/export', { method: 'POST', headers, body: JSON.stringify({ ids: [metadata.accounts[0].id], format: 'codex' }) })).json();
+  assert.equal(result.count, 1);
+  assert.equal(result.directory, outputDir);
+  assert.equal(result.files[0].name, 'demo@example.com.json');
+  assert.equal(dirname(result.files[0].path), outputDir);
+  const entries = await readdir(outputDir, { withFileTypes: true });
+  assert.equal(entries.length, 1);
+  assert.ok(entries[0].isFile(), 'the installed host exports directly without creating a batch directory');
+  assert.equal(JSON.parse(await readFile(result.files[0].path, 'utf8')).tokens.refresh_token, 'synthetic-host-refresh');
+  child.stdin.end();
+  timeout = setTimeout(() => child.kill(), 5000);
+  const exitCode = await exited;
+  clearTimeout(timeout);
+  assert.equal(exitCode, 0, 'host must exit normally when the CLI RPC pipe closes');
+  await assert.rejects(fetch(base), 'the one-shot host must release its panel port');
+  console.log('Installed Magpie host + Bun: plugin loaded; synthetic export and clean EOF shutdown passed.');
+} finally {
+  clearTimeout(timeout);
+  lines.close();
+  if (child.exitCode === null && child.signalCode === null) child.kill();
+  await exited;
+  await rm(root, { recursive: true, force: true });
+}

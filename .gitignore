@@ -1,0 +1,15 @@
+node_modules/
+*.tgz
+*.zip
+*.bundle
+dist/
+exports/
+output/
+*.magpie-backup
+.env
+.env.*
+logins.json*
+plugin-auth.json*
+auth.json
+.DS_Store
+__pycache__/
